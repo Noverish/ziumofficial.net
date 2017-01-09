@@ -8,7 +8,7 @@
     if (mysqli_num_rows($result_user) == 0) {
         $response["res"] = 2;
         $response["msg"] = "회원가입 되지 않은 유저입니다.";
-        die(json_encode($response));
+        die(raw_json_encode($response));
     }
 
     $row_user_id = mysqli_fetch_array($result_user);
@@ -17,5 +17,5 @@
     $response["msg"] = "success";
     $response["user_id"] = $row_user_id["_id"];
 
-    echo json_encode($response);
+    echo raw_json_encode($response);
 ?>

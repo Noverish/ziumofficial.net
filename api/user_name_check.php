@@ -9,5 +9,5 @@
     $response["msg"] = 'success';
     $response["is_exist"] = mysqli_num_rows($result_user) != 0;
 
-    echo json_encode($response);
+    echo raw_json_encode($response);
 ?>

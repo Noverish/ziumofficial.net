@@ -10,9 +10,25 @@
     mysqli_query($conn,"set session character_set_results=utf8;");
     mysqli_query($conn,"set session character_set_client=utf8;");
 
+    //from http://stackoverflow.com/a/16498714
+    function raw_json_encode($input, $flags = 0) {
+        $fails = implode('|', array_filter(array(
+            '\\\\',
+            $flags & JSON_HEX_TAG ? 'u003[CE]' : '',
+            $flags & JSON_HEX_AMP ? 'u0026' : '',
+            $flags & JSON_HEX_APOS ? 'u0027' : '',
+            $flags & JSON_HEX_QUOT ? 'u0022' : '',
+        )));
+        $pattern = "/\\\\(?:(?:$fails)(*SKIP)(*FAIL)|u([0-9a-fA-F]{4}))/";
+        $callback = function ($m) {
+            return html_entity_decode("&#x$m[1];", ENT_QUOTES, 'UTF-8');
+        };
+        return preg_replace_callback($pattern, $callback, json_encode($input, $flags));
+    }
+
     function print_error_and_die($msg) {
         $response["res"] = 0;
         $response["msg"] = $msg;
-        die(json_encode($response));
+        die(raw_json_encode($response));
     }
 ?>

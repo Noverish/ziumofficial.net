@@ -9,7 +9,7 @@
     if (mysqli_num_rows($result_user) > 0) {
         $response["res"] = 2;
         $response["msg"] = "이미 가입된 유저입니다";
-        die(json_encode($response));
+        die(raw_json_encode($response));
     }
 
     $sql = "INSERT into User (kakaoID,user_name,is_owner,push,reg_date,score,warning,views) VALUES ($input_id,'$input_name',0,0,now(),0,0,0)";
@@ -20,7 +20,7 @@
     if (mysqli_num_rows($result_register) == 0) {
         $response["res"] = 0;
         $response["msg"] = "회원ID를 가져오지 못했습니다.";
-        die(json_encode($response));
+        die(raw_json_encode($response));
     }
 
     $row_user_id = mysqli_fetch_array($result_register);
@@ -29,5 +29,5 @@
     $response["msg"] = "success";
     $response["user_id"] = $row_user_id["_id"];
 
-    echo json_encode($response);
+    echo raw_json_encode($response);
 ?>

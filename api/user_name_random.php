@@ -45,7 +45,7 @@
     if(count($remain) == 0) {
         $response["res"] = 2;
         $response["msg"] = 'all cases is exists';
-        die(json_encode($response));
+        die(raw_json_encode($response));
     }
 
     //remain을 다시 index가 0부터 시작하도록 만든다.
@@ -59,5 +59,5 @@
     $response["msg"] = 'success';
     $response["user_name"] = $remain[$random];
 
-    echo json_encode($response);
+    echo raw_json_encode($response);
 ?>
