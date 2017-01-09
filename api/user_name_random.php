@@ -1,38 +1,38 @@
 <?php
-    include("config.php"); 
+    include("config.php");
     // 회원 DB에서 회원 정보를 가져옵니다.
-    $result1 = mysql_query("SELECT *FROM RandomWord1") or die(mysql_error());
-    $result2 = mysql_query("SELECT *FROM RandomWord2") or die(mysql_error());
+    $result1 = mysqli_query("SELECT *FROM RandomWord1") or die(mysqli_error());
+    $result2 = mysqli_query("SELECT *FROM RandomWord2") or die(mysqli_error());
 
-    $result_user = mysql_query("SELECT user_name FROM User") or die(mysql_error());
+    $result_user = mysqli_query("SELECT user_name FROM User") or die(mysqli_error());
 
-    if (mysql_num_rows($result1) > 0) {
+    if (mysqli_num_rows($result1) > 0) {
         $word1_list = array();
 
-        while ($row1 = mysql_fetch_array($result1)) {
+        while ($row1 = mysqli_fetch_array($result1)) {
             array_push($word1_list, $row1["word"]);
         }
 
-        if (mysql_num_rows($result2) > 0) {
+        if (mysqli_num_rows($result2) > 0) {
             $word2_list = array();
 
-            while ($row2 = mysql_fetch_array($result2)) {
+            while ($row2 = mysqli_fetch_array($result2)) {
                 array_push($word2_list, $row2["word"]);
             }
 
-            $word1 = mt_rand(0, mysql_num_rows($result1)-1);
-            $word2 = mt_rand(0, mysql_num_rows($result2)-1);
+            $word1 = mt_rand(0, mysqli_num_rows($result1)-1);
+            $word2 = mt_rand(0, mysqli_num_rows($result2)-1);
             $response["user_name"] = $word1_list[$word1].$word2_list[$word2];
 
 
-            if (mysql_num_rows($result_user) > 0) {
+            if (mysqli_num_rows($result_user) > 0) {
 
-                while ($rowUser = mysql_fetch_array($result_user)) {
+                while ($rowUser = mysqli_fetch_array($result_user)) {
                     echo 'userName: '.$rowUser['user_name'];
                     echo 'check: '.$response['user_name'];
                     if($rowUser['user_name']==$response["user_name"]){
-                        $word1 = mt_rand(0, mysql_num_rows($result1)-1);
-                        $word2 = mt_rand(0, mysql_num_rows($result2)-1);
+                        $word1 = mt_rand(0, mysqli_num_rows($result1)-1);
+                        $word2 = mt_rand(0, mysqli_num_rows($result2)-1);
                         $response["user_name"] = $word1_list[$word1].$word2_list[$word2];
 
                         break;

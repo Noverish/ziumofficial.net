@@ -1,13 +1,12 @@
 <?php
-    $mysql_hostname = 'db.ziumcompany.net';
-    $mysql_user = 'ziumofficial';
-    $mysql_password = 'zntbffod1!';
-    $mysql_database = 'dbziumofficial';
+    $mysqli_hostname = 'db.ziumcompany.net';
+    $mysqli_user = 'ziumofficial';
+    $mysqli_password = 'zntbffod1!';
+    $mysqli_database = 'dbziumofficial';
 
-    $bd = mysql_connect($mysql_hostname, $mysql_user, $mysql_password) or die("db connect error");
-    mysql_select_db($mysql_database, $bd) or die("db connect error");
+    $bd = mysqli_connect($mysqli_hostname, $mysqli_user, $mysqli_password, $mysqli_database) or die("db connect error");
 
-    mysql_query("set session character_set_connection=utf8;");
-    mysql_query("set session character_set_results=utf8;");
-    mysql_query("set session character_set_client=utf8;");
+    mysqli_query("set session character_set_connection=utf8;");
+    mysqli_query("set session character_set_results=utf8;");
+    mysqli_query("set session character_set_client=utf8;");
 ?>
