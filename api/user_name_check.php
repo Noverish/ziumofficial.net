@@ -1,10 +1,6 @@
 <?php
     include("config.php"); 
 
-    mysql_query("set session character_set_connection=utf8;");
-    mysql_query("set session character_set_results=utf8;");
-    mysql_query("set session character_set_client=utf8;");
-
     $result_user = mysql_query("SELECT user_name FROM User") or die(mysql_error());
 
     $input_name = $_POST['user_name'];
@@ -25,5 +21,5 @@
     }
     // echoing JSON response
     echo json_encode($response);
-           
+
 ?>
