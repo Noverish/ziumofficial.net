@@ -14,12 +14,22 @@
 
     $stores = get_store_array($result);
 
-    $star_rate = array();
-    foreach ($stores as $key => $row)
-    {
-        $star_rate[$key] = $row['star_average'];
+    if ($sort == 0) {
+        $popular = array();
+        foreach ($stores as $key => $row)
+            $popular[$key] = $row['views'] + ($row['dibs_num'] * 30) + ($row['star_average'] * $row['review_num'] * 5);
+        array_multisort($popular, SORT_DESC, $stores);
+    } else if ($sort == 1) {
+        $star_average = array();
+        foreach ($stores as $key => $row)
+            $star_average[$key] = $row['star_average'];
+        array_multisort($star_average, SORT_DESC, $stores);
+    } else if ($sort == 2) {
+        $review = array();
+        foreach ($stores as $key => $row)
+            $review[$key] = $row['review_num'];
+        array_multisort($review, SORT_DESC, $stores);
     }
-    array_multisort($star_rate, SORT_DESC, $stores);
 
     $res["res"] = 1;
     $res["msg"] = "success";
