@@ -39,5 +39,9 @@
     $data['imgs'] = $imgs;
     $data['menus'] = $menus;
 
-    echo raw_json_encode($data);
+    $res["res"] = 1;
+    $res["msg"] = "success";
+    $res["data"];
+
+    echo raw_json_encode($res);
 ?>
