@@ -12,7 +12,7 @@
 
     $res['res'] = 1;
     $res['msg'] = 'success';
-    $res['reviews'] = $reviews;
+    $res['reviews'] = array_slice($reviews,$PAGE_SIZE * ($page - 1),$PAGE_SIZE);
 
     echo raw_json_encode($res);
 ?>
