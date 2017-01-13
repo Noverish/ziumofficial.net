@@ -31,4 +31,14 @@
         $response["msg"] = $msg;
         die(raw_json_encode($response));
     }
+
+    function query_result_to_array($result) {
+        $data = array();
+        while($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        return $data;
+    }
+
+    $PAGE_SIZE = 20;
 ?>
