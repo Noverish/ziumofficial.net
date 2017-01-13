@@ -8,7 +8,7 @@
     $tmp = query_result_to_array($result);
     $res = $tmp[0];
 
-    $res = array_merge(array('res' => 1, 'msg' => 'success'), $res);
+    $res = array('res' => 1, 'msg' => 'success') + $res;
 
     echo raw_json_encode($res);
 ?>

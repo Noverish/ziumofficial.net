@@ -37,7 +37,7 @@
     unset($res["img"]);
     unset($res["views"]);
 
-    $res = array_merge(array('res' => 1, 'msg' => 'success'), $res);
+    $res = array('res' => 1, 'msg' => 'success') + $res;
 
     echo raw_json_encode($res);
 ?>
