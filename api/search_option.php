@@ -1,6 +1,6 @@
 <?php
     include('config.php');
-    include('module_store.php');
+    include('query_func.php');
 
     $category = $_POST["category"];
     $region = $_POST["region"];
@@ -9,7 +9,7 @@
     $sort = $_POST["sort"];
     $page = $_POST["page"];
 
-    $sql="SELECT _id FROM Store WHERE (category & $category = $category) AND (region & $region = $region) AND (type1 & $type1 = $type1) AND (type2 & $type2 = $type2)";
+    $sql="SELECT * FROM Store WHERE (category & $category = $category) AND (region & $region = $region) AND (type1 & $type1 = $type1) AND (type2 & $type2 = $type2)";
     $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
 
     $stores = get_store_array($result);
