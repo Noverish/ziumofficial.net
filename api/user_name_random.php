@@ -2,9 +2,9 @@
     include("config.php");
     // 회원 DB에서 회원 정보를 가져옵니다.
 
-    $result_user = mysqli_query($conn,"SELECT user_name FROM User") or print_error_and_die($mysqli_error($conn));
-    $result1 = mysqli_query($conn,"SELECT *FROM RandomWord1") or print_error_and_die($mysqli_error($conn));
-    $result2 = mysqli_query($conn,"SELECT *FROM RandomWord2") or print_error_and_die($mysqli_error($conn));
+    $result_user = mysqli_query($conn,"SELECT user_name FROM User") or print_error_and_die(mysqli_error($conn));
+    $result1 = mysqli_query($conn,"SELECT *FROM RandomWord1") or print_error_and_die(mysqli_error($conn));
+    $result2 = mysqli_query($conn,"SELECT *FROM RandomWord2") or print_error_and_die(mysqli_error($conn));
 
     if (mysqli_num_rows($result_user) == 0)
         print_error_and_die('failed to load user');

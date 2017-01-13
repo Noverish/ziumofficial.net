@@ -3,7 +3,7 @@
 
     $input_name = $_POST['user_name'];
 
-    $result_user = mysqli_query($conn,"SELECT user_name FROM User WHERE user_name='$input_name'") or print_error_and_die($mysqli_error($conn));
+    $result_user = mysqli_query($conn,"SELECT user_name FROM User WHERE user_name='$input_name'") or print_error_and_die(mysqli_error($conn));
 
     $response["res"] = 1;
     $response["msg"] = 'success';

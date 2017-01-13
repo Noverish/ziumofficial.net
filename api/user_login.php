@@ -3,7 +3,7 @@
 
     $input_id = $_POST['kakaoID'];
 
-    $result_user = mysqli_query($conn,"SELECT _id FROM User WHERE kakaoID=$input_id") or print_error_and_die($mysqli_error($conn));
+    $result_user = mysqli_query($conn,"SELECT _id FROM User WHERE kakaoID=$input_id") or print_error_and_die(mysqli_error($conn));
 
     if (mysqli_num_rows($result_user) == 0) {
         $response["res"] = 2;
