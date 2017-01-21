@@ -6,7 +6,7 @@
     $type1 = $_POST["type1"];
     $type2 = $_POST["type2"];
 
-    $sql="SELECT _id FROM Store WHERE (category & $category = $category) AND (region & $region = $region) AND (type1 & $type1 = $type1) AND (type2 & $type2 = $type2)";
+    $sql="SELECT _id FROM Store WHERE (category & $category != 0) AND (region & $region != 0) AND (type1 & $type1 != 0) AND (type2 & $type2 != 0)";
     $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
 
     $array = array();
