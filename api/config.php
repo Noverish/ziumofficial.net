@@ -41,4 +41,6 @@
     }
 
     $PAGE_SIZE = 20;
+
+    header('Content-type:application/json;charset=utf-8');
 ?>
