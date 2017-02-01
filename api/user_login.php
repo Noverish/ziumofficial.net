@@ -3,7 +3,7 @@
 
     $kakaoID = $_POST['kakaoID'] or print_error_and_die("There is no kakaoID");
 
-    $sql = sprintf("SELECT _id FROM User WHERE kakaoID = %s",
+    $sql = sprintf("SELECT _id, (SELECT COUNT(*) > 0 FROM UserMsg WHERE user_id = User._id AND is_user_sent = FALSE AND is_user_read = FALSE) AS has_noti FROM User WHERE kakaoID = %s",
         mysqli_real_escape_string($conn, $kakaoID));
     $result = mysqli_query($conn, $sql) or print_sql_error_and_die();
     $row = mysqli_fetch_array($result);
@@ -15,6 +15,7 @@
         $res["res"] = 1;
         $res["msg"] = "success";
         $res["user_id"] = $row["_id"];
+        $res["has_noti"] = $row["has_noti"];
     }
 
     echo raw_json_encode($res);
