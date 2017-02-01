@@ -1,6 +1,5 @@
 <?php
     include('config.php');
-    include('query_func.php');
 
     $keyword = $_POST["keyword"] or print_error_and_die("There is no keyword");
     $page = $_POST["page"] or print_error_and_die("There is no page");

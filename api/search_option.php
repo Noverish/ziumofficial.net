@@ -1,6 +1,5 @@
 <?php
     include('config.php');
-    include('query_func.php');
 
     $category = $_POST["category"] or print_error_and_die("There is no category");
     $region = $_POST["region"] or print_error_and_die("There is no region");
