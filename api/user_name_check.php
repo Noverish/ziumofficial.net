@@ -1,13 +1,15 @@
 <?php
     include("config.php");
 
-    $input_name = $_POST['user_name'];
+    $user_name = $_POST['user_name'] or print_error_and_die("There is no user_name");
 
-    $result_user = mysqli_query($conn,"SELECT user_name FROM User WHERE user_name='$input_name'") or print_error_and_die(mysqli_error($conn));
+    $sql = sprintf("SELECT user_name FROM User WHERE user_name = '%s'",
+        mysqli_real_escape_string($conn, $user_name));
+    $result = mysqli_query($conn, $sql) or print_sql_error_and_die();
 
-    $response["res"] = 1;
-    $response["msg"] = 'success';
-    $response["is_exist"] = mysqli_num_rows($result_user) != 0;
+    $res["res"] = 1;
+    $res["msg"] = 'success';
+    $res["is_exist"] = mysqli_num_rows($result) != 0;
 
-    echo raw_json_encode($response);
+    echo raw_json_encode($res);
 ?>

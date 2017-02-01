@@ -32,6 +32,12 @@
         die(raw_json_encode($response));
     }
 
+    function print_sql_error_and_die() {
+        $response["res"] = 0;
+        $response["msg"] = "SQL query error occurred";
+        die(raw_json_encode($response));
+    }
+
     function query_result_to_array($result) {
         $data = array();
         while($row = mysqli_fetch_assoc($result)) {

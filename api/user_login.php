@@ -1,21 +1,21 @@
 <?php
     include("config.php");
 
-    $input_id = $_POST['kakaoID'];
+    $kakaoID = $_POST['kakaoID'] or print_error_and_die("There is no kakaoID");
 
-    $result_user = mysqli_query($conn,"SELECT _id FROM User WHERE kakaoID=$input_id") or print_error_and_die(mysqli_error($conn));
+    $sql = sprintf("SELECT _id FROM User WHERE kakaoID = %s",
+        mysqli_real_escape_string($conn, $kakaoID));
+    $result = mysqli_query($conn, $sql) or print_sql_error_and_die();
+    $row = mysqli_fetch_array($result);
 
-    if (mysqli_num_rows($result_user) == 0) {
-        $response["res"] = 2;
-        $response["msg"] = "회원가입 되지 않은 유저입니다.";
-        die(raw_json_encode($response));
+    if (mysqli_num_rows($result) == 0) {
+        $res["res"] = 2;
+        $res["msg"] = "회원가입 되지 않은 유저입니다.";
+    } else {
+        $res["res"] = 1;
+        $res["msg"] = "success";
+        $res["user_id"] = $row["_id"];
     }
 
-    $row_user_id = mysqli_fetch_array($result_user);
-
-    $response["res"] = 1;
-    $response["msg"] = "success";
-    $response["user_id"] = $row_user_id["_id"];
-
-    echo raw_json_encode($response);
+    echo raw_json_encode($res);
 ?>
