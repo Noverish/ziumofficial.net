@@ -2,38 +2,47 @@
     include('config.php');
     include('query_func.php');
 
-    $category = $_POST["category"];
-    $region = $_POST["region"];
-    $type1 = $_POST["type1"];
-    $type2 = $_POST["type2"];
-    $sort = $_POST["sort"];
-    $page = $_POST["page"];
+    $category = $_POST["category"] or print_error_and_die("There is no category");
+    $region = $_POST["region"] or print_error_and_die("There is no region");
+    $type1 = $_POST["type1"] or print_error_and_die("There is no type1");
+    $type2 = $_POST["type2"] or print_error_and_die("There is no type2");
+    $sort = $_POST["sort"] or print_error_and_die("There is no sort");
+    $page = $_POST["page"] or print_error_and_die("There is no page");
 
-    $sql="SELECT * FROM Store WHERE (category & $category != 0) AND (region & $region != 0) AND (type1 & $type1 != 0) AND (type2 & $type2 != 0)";
-    $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
+    if(!is_numeric($category)) print_error_and_die("category is not number");
+    if(!is_numeric($region)) print_error_and_die("region is not number");
+    if(!is_numeric($type1)) print_error_and_die("type1 is not number");
+    if(!is_numeric($type2)) print_error_and_die("type2 is not number");
+    if(!is_numeric($sort)) print_error_and_die("sort is not number");
+    if(!is_numeric($page)) print_error_and_die("page is not number");
 
-    $stores = get_store_array($result);
+    $page_offset = $PAGE_SIZE * ($page - 1);
 
-    if ($sort == 0) {
-        $popular = array();
-        foreach ($stores as $key => $row)
-            $popular[$key] = $row['views'] + ($row['dibs_num'] * 30) + ($row['star_average'] * $row['review_num'] * 5);
-        array_multisort($popular, SORT_DESC, $stores);
-    } else if ($sort == 1) {
-        $star_average = array();
-        foreach ($stores as $key => $row)
-            $star_average[$key] = $row['star_average'];
-        array_multisort($star_average, SORT_DESC, $stores);
-    } else if ($sort == 2) {
-        $review = array();
-        foreach ($stores as $key => $row)
-            $review[$key] = $row['review_num'];
-        array_multisort($review, SORT_DESC, $stores);
-    }
+    $sql =
+        "SELECT _id as store_id, name as store_name, ".
+        "(SELECT IFNULL(AVG(star_rate), 0) FROM Review WHERE store_id = Store._id) as star_average, ".
+        "(SELECT COUNT(_id) FROM Review WHERE store_id = Store._id) as review_num, ".
+        "(SELECT COUNT(_id) FROM UserDibs WHERE store_id = Store._id) as dibs_num, ".
+        "img as store_img, is_new, ".
+        "(SELECT IF(COUNT(_id) = 0, 0, 1) FROM Event WHERE store_id = Store._id) as is_event ".
+        "FROM Store ".
+        "WHERE (category & $category != 0) AND (region & $region != 0) AND (type1 & $type1 != 0) AND (type2 & $type2 != 0) ";
+
+    if($sort == 0)
+        $sql .= "ORDER BY (views + dibs_num * 30 + star_average * review_num * 10) DESC ";
+    else if($sort == 1)
+        $sql .= "ORDER BY star_average DESC ";
+    else if($sort == 2)
+        $sql .= "ORDER BY review_num DESC ";
+    else
+        print_error_and_die("sort MUST be one of 1,2,3");
+
+    $sql .= "LIMIT $page_offset, $PAGE_SIZE ";
+    $result = mysqli_query($conn, $sql) or print_sql_error_and_die($conn, $sql);
 
     $res["res"] = 1;
     $res["msg"] = "success";
-    $res["stores"] = array_slice($stores,$PAGE_SIZE * ($page - 1),$PAGE_SIZE);
+    $res["stores"] = query_result_to_array($result);
 
     echo raw_json_encode($res);
 ?>

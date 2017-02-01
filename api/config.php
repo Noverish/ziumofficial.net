@@ -32,9 +32,10 @@
         die(raw_json_encode($response));
     }
 
-    function print_sql_error_and_die() {
+    function print_sql_error_and_die($conn, $sql) {
         $response["res"] = 0;
-        $response["msg"] = "SQL query error occurred";
+        $response["msg"] = mysqli_error($conn);
+        $response["sql"] = $sql;
         die(raw_json_encode($response));
     }
 

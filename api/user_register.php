@@ -7,7 +7,7 @@
     $sql_user = sprintf("SELECT user_name, kakaoID FROM User WHERE user_name = '%s' OR kakaoID = %s",
         mysqli_real_escape_string($conn, $user_name),
         mysqli_real_escape_string($conn, $kakaoID));
-    $result_user = mysqli_query($conn, $sql_user) or print_sql_error_and_die();
+    $result_user = mysqli_query($conn, $sql_user) or print_sql_error_and_die($conn, $sql_user);
     $row_user = mysqli_fetch_assoc($result_user);
 
     if (mysqli_num_rows($result_user) > 0) {
@@ -20,11 +20,11 @@
                             "VALUES (%s, '%s', 0, 0, now(), 0, 0, 0)",
         mysqli_real_escape_string($conn, $kakaoID),
         mysqli_real_escape_string($conn, $user_name));
-    $result_register = mysqli_query($conn, $sql_register) or print_sql_error_and_die();
+    $result_register = mysqli_query($conn, $sql_register) or print_sql_error_and_die($conn, $sql_register);
 
     $sql_id = sprintf("SELECT _id FROM User WHERE user_name='%s'",
         mysqli_real_escape_string($conn, $user_name));
-    $result_id = mysqli_query($conn, $sql_id) or print_sql_error_and_die();
+    $result_id = mysqli_query($conn, $sql_id) or print_sql_error_and_die($conn, $sql_id);
     $row_id = mysqli_fetch_array($result_id);
 
     $res["res"] = 1;

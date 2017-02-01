@@ -1,9 +1,9 @@
 <?php
     include("config.php");
 
-    $result_user = mysqli_query($conn,"SELECT user_name FROM User") or print_sql_error_and_die();
-    $result1 = mysqli_query($conn,"SELECT * FROM RandomWord1") or print_sql_error_and_die();
-    $result2 = mysqli_query($conn,"SELECT * FROM RandomWord2") or print_sql_error_and_die();
+    $result_user = mysqli_query($conn,"SELECT user_name FROM User") or print_sql_error_and_die($conn, "");
+    $result1 = mysqli_query($conn,"SELECT * FROM RandomWord1") or print_sql_error_and_die($conn, "");
+    $result2 = mysqli_query($conn,"SELECT * FROM RandomWord2") or print_sql_error_and_die($conn, "");
 
     $word1_list = array();
     $word2_list = array();

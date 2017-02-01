@@ -5,7 +5,7 @@
 
     $sql = sprintf("SELECT user_name FROM User WHERE user_name = '%s'",
         mysqli_real_escape_string($conn, $user_name));
-    $result = mysqli_query($conn, $sql) or print_sql_error_and_die();
+    $result = mysqli_query($conn, $sql) or print_sql_error_and_die($conn, $sql);
 
     $res["res"] = 1;
     $res["msg"] = 'success';
