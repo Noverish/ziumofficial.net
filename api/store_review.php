@@ -1,5 +1,6 @@
 <?php
     include('config.php');
+    include('query_func.php');
 
     ($store_id = $_POST["store_id"]) != NULL or print_error_and_die("There is no store_id");
     ($page = $_POST["page"]) != NULL or print_error_and_die("There is no page");
@@ -8,6 +9,8 @@
     if(!is_numeric($store_id)) print_error_and_die("store_id is not number");
     if(!is_numeric($page)) print_error_and_die("page is not number");
     if(!is_numeric($sort)) print_error_and_die("sort is not number");
+
+    if_not_valid_store_id_then_die($store_id);
 
     $page_offset = $PAGE_SIZE * ($page - 1);
 
@@ -33,9 +36,6 @@
 
     $sql_review .= "LIMIT $page_offset, $PAGE_SIZE ";
     $result_review = mysqli_query($conn, $sql_review) or print_sql_error_and_die($conn, $sql_review);
-
-    if($result_review == null || mysqli_num_rows($result_review) == 0)
-        print_error_and_die("There is no store whose id is ".$store_id);
 
     $res['res'] = 1;
     $res['msg'] = 'success';
