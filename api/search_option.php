@@ -1,12 +1,12 @@
 <?php
     include('config.php');
 
-    $category = $_POST["category"] or print_error_and_die("There is no category");
-    $region = $_POST["region"] or print_error_and_die("There is no region");
-    $type1 = $_POST["type1"] or print_error_and_die("There is no type1");
-    $type2 = $_POST["type2"] or print_error_and_die("There is no type2");
-    $sort = $_POST["sort"] or print_error_and_die("There is no sort");
-    $page = $_POST["page"] or print_error_and_die("There is no page");
+    ($category = $_POST["category"]) != NULL or print_error_and_die("There is no category");
+    ($region = $_POST["region"]) != NULL or print_error_and_die("There is no region");
+    ($type1 = $_POST["type1"]) != NULL or print_error_and_die("There is no type1");
+    ($type2 = $_POST["type2"]) != NULL or print_error_and_die("There is no type2");
+    ($sort = $_POST["sort"]) != NULL or print_error_and_die("There is no sort");
+    ($page = $_POST["page"]) != NULL or print_error_and_die("There is no page");
 
     if(!is_numeric($category)) print_error_and_die("category is not number");
     if(!is_numeric($region)) print_error_and_die("region is not number");

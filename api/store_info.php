@@ -1,7 +1,7 @@
 <?php
     include('config.php');
 
-    $store_id = $_POST["store_id"] or print_error_and_die("There is no store_id");
+    ($store_id = $_POST["store_id"]) != NULL or print_error_and_die("There is no store_id");
 
     if(!is_numeric($store_id)) print_error_and_die("store_id is not number");
 

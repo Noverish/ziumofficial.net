@@ -1,8 +1,8 @@
 <?php
     include('config.php');
 
-    $keyword = $_POST["keyword"] or print_error_and_die("There is no keyword");
-    $page = $_POST["page"] or print_error_and_die("There is no page");
+    ($keyword = $_POST["keyword"]) != NULL or print_error_and_die("There is no keyword");
+    ($page = $_POST["page"]) != NULL or print_error_and_die("There is no page");
 
     if(!is_numeric($page)) print_error_and_die("page is not number");
 

@@ -1,7 +1,7 @@
 <?php
     include("config.php");
 
-    $user_name = $_POST['user_name'] or print_error_and_die("There is no user_name");
+    ($user_name = $_POST['user_name']) != NULL or print_error_and_die("There is no user_name");
 
     $sql = sprintf("SELECT user_name FROM User WHERE user_name = '%s'",
         mysqli_real_escape_string($conn, $user_name));

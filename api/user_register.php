@@ -1,8 +1,8 @@
 <?php
     include("config.php");
 
-    $user_name = $_POST['user_name'] or print_error_and_die("There is no user_name");
-    $kakaoID = $_POST['kakaoID'] or print_error_and_die("There is no kakaoID");
+    ($user_name = $_POST['user_name']) != NULL or print_error_and_die("There is no user_name");
+    ($kakaoID = $_POST['kakaoID']) != NULL or print_error_and_die("There is no kakaoID");
 
     $sql_user = sprintf("SELECT user_name, kakaoID FROM User WHERE user_name = '%s' OR kakaoID = %s",
         mysqli_real_escape_string($conn, $user_name),

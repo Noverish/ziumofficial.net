@@ -1,7 +1,7 @@
 <?php
     include("config.php");
 
-    $kakaoID = $_POST['kakaoID'] or print_error_and_die("There is no kakaoID");
+    ($kakaoID = $_POST['kakaoID']) != NULL or print_error_and_die("There is no kakaoID");
 
     $sql = sprintf("SELECT _id, (SELECT COUNT(*) > 0 FROM UserMsg WHERE user_id = User._id AND is_user_sent = FALSE AND is_user_read = FALSE) AS has_noti FROM User WHERE kakaoID = %s",
         mysqli_real_escape_string($conn, $kakaoID));
