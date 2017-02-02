@@ -28,6 +28,15 @@
             print_error_and_die("There is no review whose id is ".$id);
     }
 
+    function if_not_valid_rcmd_id_then_die($id) {
+        global $conn;
+
+        $sql = "SELECT _id FROM Rcmd WHERE _id = $id";
+        $result = mysqli_query($conn, $sql) or print_sql_error_and_die($conn, $sql);
+        if($result == null || mysqli_num_rows($result) == 0)
+            print_error_and_die("There is no rcmd whose id is ".$id);
+    }
+
     function get_star_average_and_review_num($store_id) {
         global $conn;
 

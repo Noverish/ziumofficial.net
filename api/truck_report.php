@@ -1,11 +1,17 @@
 <?php
     include('config.php');
+    include('query_func.php');
 
-    $user_id = $_POST["user_id"];
-    $content = $_POST["content"];
+    ($user_id = $_POST["user_id"]) != NULL or print_error_and_die("There is no user_id");
+    ($content = $_POST["content"]) != NULL or print_error_and_die("There is no content");
 
-    $now_str = date('Y-m-d H:i:s');
-    $sql = "INSERT INTO TruckReport (user_id, truck_id, content, date) VALUES ($user_id, -1, '$content', '$now_str')";
+    if(!is_numeric($user_id)) print_error_and_die("user_id is not number");
+
+    if_not_valid_user_id_then_die($user_id);
+
+    $sql = "INSERT INTO TruckReport (user_id, truck_id, content, date) VALUES ($user_id, -1, '%s', now())";
+    $sql = sprintf($sql,
+        mysqli_real_escape_string($conn, $content));
     $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
 
     $res["res"] = 1;
