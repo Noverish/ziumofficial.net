@@ -34,7 +34,7 @@
     else if($sort == 2)
         $sql .= "ORDER BY review_num DESC ";
     else
-        print_error_and_die("sort MUST be one of 1,2,3");
+        print_error_and_die("sort MUST be one of 0, 1, 2");
 
     $sql .= "LIMIT $page_offset, $PAGE_SIZE ";
     $result = mysqli_query($conn, $sql) or print_sql_error_and_die($conn, $sql);
