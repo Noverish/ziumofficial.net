@@ -19,8 +19,13 @@
         mysqli_real_escape_string($conn, $content));
     $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
 
+    $sql = "SELECT MAX(_id) FROM Comment";
+    $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
+    $row = mysqli_fetch_array($result);
+
     $res["res"] = 1;
     $res["msg"] = "success";
+    $res["comment_id"] = $row[0];
 
     echo raw_json_encode($res);
 ?>

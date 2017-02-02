@@ -1,6 +1,5 @@
 <?php
     include('config.php');
-    include('query_func.php');
 
     $user_id = $_POST["user_id"];
     $page = $_POST["page"];

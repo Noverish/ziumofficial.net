@@ -2,13 +2,16 @@
     include('config.php');
 
     ($store_id = $_POST["store_id"]) != NULL or print_error_and_die("There is no store_id");
+    ($user_id = $_POST["user_id"]) != NULL or print_error_and_die("There is no user_id");
 
     if(!is_numeric($store_id)) print_error_and_die("store_id is not number");
+    if(!is_numeric($user_id)) print_error_and_die("user_id is not number");
 
     $sql_store = "SELECT *, Event.img_main as event_main, Event.img_detail as event_detail, ".
                  "(SELECT AVG(star_rate) FROM Review WHERE store_id = $store_id) as star_average, ".
                  "(SELECT COUNT(_id) FROM Review WHERE store_id = $store_id) as review_num,".
-                 "(SELECT COUNT(_id) FROM UserDibs WHERE store_id = $store_id) as dibs_num ".
+                 "(SELECT COUNT(_id) FROM UserDibs WHERE store_id = $store_id) as dibs_num, ".
+                 "(SELECT IF(COUNT(_id) > 0, 1, 0) FROM UserDibs WHERE user_id = $user_id AND store_id = Store._id) as is_user_dib ".
                  "FROM Store ".
                  "INNER JOIN Event ON Store._id = Event.store_id ".
                  "WHERE Store._id = $store_id";
