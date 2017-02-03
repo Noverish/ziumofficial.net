@@ -15,7 +15,7 @@
         $res["res"] = 1;
         $res["msg"] = "success";
         $res["user_id"] = $row["_id"];
-        $res["has_noti"] = $row["has_noti"];
+        $res["has_noti"] = $row["has_noti"] != 0;
     }
 
     echo raw_json_encode($res);
