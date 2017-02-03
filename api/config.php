@@ -49,5 +49,12 @@
 
     $PAGE_SIZE = 20;
 
+    $SCORE_ATTEND = 3;
+    $SCORE_REVIEW = 10;
+    $SCORE_REVIEW_MAX = 3;
+    $SCORE_SENT_LIKE = 1;
+    $SCORE_SENT_LIKE_MAX = 5;
+    $SCORE_RCVD_LIKE = 2;
+
     header('Content-type:application/json;charset=utf-8');
 ?>

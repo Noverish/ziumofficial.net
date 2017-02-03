@@ -19,4 +19,14 @@
     }
 
     echo raw_json_encode($res);
+
+    $user_id = $row['_id'];
+    $sql_history = "INSERT INTO HistoryLogin (user_id, date) VALUES ($user_id, now())";
+    if(mysqli_query($conn, $sql_history)) {
+        $sql_score = "UPDATE User SET score = score + $SCORE_ATTEND WHERE _id = $user_id";
+        mysqli_query($conn, $sql_score);
+    } else {
+        $sql_score = "UPDATE HistoryLogin SET login_today = login_today + 1 WHERE user_id = $user_id AND date = now()";
+        mysqli_query($conn, $sql_score);
+    }
 ?>

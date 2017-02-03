@@ -28,4 +28,12 @@
     $res["msg"] = "success";
 
     echo raw_json_encode($res);
+
+    $sql_score = "SELECT COUNT(_id) FROM Review WHERE user_id = $user_id AND date(write_date) = date(now())";
+    $result_score = mysqli_query($conn, $sql_score);
+    $row_score = mysqli_fetch_array($result_score);
+    if($row_score[0] <= $SCORE_REVIEW_MAX) {
+        $sql_score = "UPDATE User SET score = score + $SCORE_REVIEW WHERE _id = $user_id";
+        mysqli_query($conn, $sql_score);
+    }
 ?>
