@@ -16,4 +16,7 @@
     $res["data"] = query_result_to_array($result);
 
     echo raw_json_encode($res);
+
+    $sql_views = "UPDATE Rcmd SET views = views + 1 WHERE _id = $rcmd_id";
+    mysqli_query($conn, $sql_views)
 ?>

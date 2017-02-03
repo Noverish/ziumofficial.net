@@ -41,4 +41,7 @@
     $res = array('res' => 1, 'msg' => 'success') + $res;
 
     echo raw_json_encode($res);
+
+    $sql_views = "UPDATE Store SET views = views + 1 WHERE _id = $store_id";
+    mysqli_query($conn, $sql_views)
 ?>
