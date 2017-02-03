@@ -5,6 +5,7 @@
 
     if(!is_numeric($page)) print_error_and_die("page is not number");
 
+    if($page < 1) print_error_and_die("page must be bigger than 0");
     $page_offset = $PAGE_SIZE * ($page - 1);
 
     $sql="SELECT _id as rcmd_id, title, img, date FROM Rcmd ORDER BY priority DESC, date DESC LIMIT $page_offset, $PAGE_SIZE";

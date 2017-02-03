@@ -12,6 +12,7 @@
 
     if_not_valid_store_id_then_die($store_id);
 
+    if($page < 1) print_error_and_die("page must be bigger than 0");
     $page_offset = $PAGE_SIZE * ($page - 1);
 
     $sql_review =

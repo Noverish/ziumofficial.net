@@ -8,6 +8,7 @@
     if(!is_numeric($user_id)) print_error_and_die("user_id is not number");
     if(!is_numeric($page)) print_error_and_die("page is not number");
 
+    if($page < 1) print_error_and_die("page must be bigger than 0");
     if_not_valid_user_id_then_die($user_id);
 
     $page_offset = $PAGE_SIZE * ($page - 1);
