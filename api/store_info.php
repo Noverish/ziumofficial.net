@@ -8,7 +8,7 @@
     if(!is_numeric($user_id)) print_error_and_die("user_id is not number");
 
     $sql_store = "SELECT *, Event.img_main as event_main, Event.img_detail as event_detail, ".
-                 "(SELECT AVG(star_rate) FROM Review WHERE store_id = $store_id) as star_average, ".
+                 "(SELECT ROUND(IFNULL(AVG(star_rate), 0), 1) FROM Review WHERE store_id = $store_id) as star_average, ".
                  "(SELECT COUNT(_id) FROM Review WHERE store_id = $store_id) as review_num,".
                  "(SELECT COUNT(_id) FROM UserDibs WHERE store_id = $store_id) as dibs_num, ".
                  "(SELECT IF(COUNT(_id) > 0, 1, 0) FROM UserDibs WHERE user_id = $user_id AND store_id = Store._id) as is_user_dib ".

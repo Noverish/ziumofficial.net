@@ -13,16 +13,12 @@
     $page_offset = $PAGE_SIZE * ($page - 1);
 
     $sql_review =
-        "SELECT Review._id as review_id, Store._id as store_id, Store.name as store_name, ".
-        "(SELECT IFNULL(AVG(star_rate), 0) FROM Review WHERE store_id = Store._id) as star_average, ".
-        "(SELECT COUNT(_id) FROM Review WHERE store_id = Store._id) as review_num, ".
-        "(SELECT COUNT(_id) FROM UserDibs WHERE store_id = Store._id) as dibs_num, ".
+        "SELECT Review._id as review_id, ".
         "Review.user_id, User.user_name, User.is_owner, star_rate, content, img1, img2, img3, ".
         "(SELECT COUNT(_id) FROM UserLikes WHERE review_id = Review._id) as like_num, ".
         "(SELECT COUNT(_id) FROM Comment WHERE review_id = Review._id) as comment_num, write_date, modify_date ".
         "FROM UserLikes ".
         "INNER JOIN Review ON Review._id = UserLikes.review_id ".
-        "INNER JOIN Store ON Store._id = Review.store_id ".
         "INNER JOIN User ON User._id = Review.user_id ".
         "WHERE UserLikes.user_id = $user_id ".
         "ORDER BY write_date DESC ".

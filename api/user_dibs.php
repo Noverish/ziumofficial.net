@@ -14,7 +14,7 @@
 
     $sql =
         "SELECT Store._id as store_id, Store.name as store_name, ".
-        "(SELECT IFNULL(AVG(star_rate), 0) FROM Review WHERE store_id = Store._id) as star_average, ".
+        "(SELECT ROUND(IFNULL(AVG(star_rate), 0), 1) FROM Review WHERE store_id = Store._id) as star_average, ".
         "(SELECT COUNT(_id) FROM Review WHERE store_id = Store._id) as review_num, ".
         "(SELECT COUNT(_id) FROM UserDibs WHERE store_id = Store._id) as dibs_num, ".
         "Store.img as store_img, Store.is_new, ".
