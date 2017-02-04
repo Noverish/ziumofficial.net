@@ -26,7 +26,7 @@
         print_error_and_die("There is no review whose id is ".$review_id);
 
     $sql_comment =
-        "SELECT user_id, User.user_name, User.is_owner, content, date ".
+        "SELECT Comment._id as comment_id, user_id, User.user_name, User.is_owner, content, date ".
         "FROM Comment ".
         "INNER JOIN User ON User._id = Comment.user_id ".
         "WHERE review_id = $review_id";
