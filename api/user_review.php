@@ -14,12 +14,13 @@
     $page_offset = $PAGE_SIZE * ($page - 1);
 
     $sql_review =
-        "SELECT Review._id as review_id, ".
+        "SELECT Review._id as review_id, Store._id as store_id, Store.name as store_name, ".
         "user_id, User.user_name, User.is_owner, star_rate, content, img1, img2, img3, ".
         "(SELECT COUNT(_id) FROM UserLikes WHERE review_id = Review._id) as like_num, ".
         "(SELECT COUNT(_id) FROM Comment WHERE review_id = Review._id) as comment_num, write_date, modify_date ".
         "FROM Review ".
         "INNER JOIN User ON User._id = Review.user_id ".
+        "INNER JOIN Store On Store._id = Review.store_id ".
         "WHERE user_id = $user_id ".
         "ORDER BY write_date DESC ".
         "LIMIT $page_offset, $PAGE_SIZE ";
