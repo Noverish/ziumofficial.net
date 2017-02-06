@@ -8,7 +8,7 @@
 
     $response["res"] = 1;
     $response["msg"] = "success";
-    $response["user_id"] = query_result_to_array($result);
+    $response["data"] = query_result_to_array($result);
 
     echo raw_json_encode($response);
 ?>
