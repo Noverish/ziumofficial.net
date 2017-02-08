@@ -26,6 +26,13 @@
         return preg_replace_callback($pattern, $callback, json_encode($input, $flags));
     }
 
+    function random_string($str) {
+        $random_index = rand(0, strlen($str) - 20);
+        $random_substr = substr($str, $random_index, 16);
+        $hash = hash("sha256", $str);
+        return substr($hash, 0, 16);
+    }
+
     function print_error_and_die($msg) {
         $response["res"] = 0;
         $response["msg"] = $msg;

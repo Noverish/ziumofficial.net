@@ -1,25 +1,26 @@
 <?php
-// echo(get_current_user());
-// mb_internal_encoding("UTF-8");
-// echo(mb_internal_encoding());
-// echo exec('whoami');
-// chmod("../asset/image", 0777);
-    // $test = fopen("../asset/image/test.txt",'w');
-    // fwrite($test,"asdf");
-    // fclose($test);
-    // echo("asdf");
-    // $binary = file_get_contents('php://input');
-    // Get image string posted from Android App
-    $base = $_REQUEST['image'];
-    // Get file name posted from Android App
-    $folder = "../asset/image/";
-    $filename = hash("sha256", substr($base,rand(0, strlen($base) - 20),16)).".jpg";
-    // Decode Image
+    include('config.php');
+    $path = "../asset/image/";
+
+    ($base = $_POST["image"]) != NULL or print_error_and_die("There is no image");
+    ($store_id = $_POST["store_id"]) != NULL or print_error_and_die("There is no store_id");
+    ($user_id = $_POST["user_id"]) != NULL or print_error_and_die("There is no user_id");
+
+    if(!is_numeric($user_id)) print_error_and_die("user_id is not number");
+    if(!is_numeric($store_id)) print_error_and_die("store_id is not number");
+
+    $user_str = sprintf("%08dU",$user_id);
+    $store_str = sprintf("%04dS",$store_id);
+    $millis = round(microtime(true) * 1000);
+    $random_str = random_string($base);
+
+    $filename = $store_str."_".$user_str."_".$millis."_".$random_str.".jpg";
+
     $binary = base64_decode($base);
     header('Content-Type: bitmap; charset=utf-8');
-    // Images will be saved under 'www/imgupload/uplodedimages' folder
-    $file = fopen($folder.$filename, 'wb');
-    // Create File
+
+    $file = fopen($path.$filename, 'wb');
+
     fwrite($file, $binary);
     fclose($file);
 
