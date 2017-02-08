@@ -32,6 +32,8 @@
     else
         print_error_and_die("sort MUST be one of 0, 1, 2");
 
+    $sql_review .= "LIMIT $page_offset, $PAGE_SIZE ";
+
     $result_review = mysqli_query($conn, $sql_review) or print_error_and_die(mysqli_error($conn));
 
     $res['res'] = 1;

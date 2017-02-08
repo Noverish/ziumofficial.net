@@ -10,6 +10,10 @@
     ($img2 = $_POST["img2"]) != NULL or ($img2 = "NULL");
     ($img3 = $_POST["img3"]) != NULL or ($img3 = "NULL");
 
+    if(strcmp($img1,"NULL") != 0) $img1 = "'".$img1."'";
+    if(strcmp($img2,"NULL") != 0) $img2 = "'".$img2."'";
+    if(strcmp($img3,"NULL") != 0) $img3 = "'".$img3."'";
+
     if(!is_numeric($user_id)) print_error_and_die("user_id is not number");
     if(!is_numeric($store_id)) print_error_and_die("store_id is not number");
     if(!is_numeric($star)) print_error_and_die("star is not number");
@@ -19,7 +23,7 @@
 
     $sql =
         "INSERT INTO Review (user_id, store_id, star_rate, content, img1, img2, img3, write_date) ".
-        "VALUES ($user_id, $store_id, '$star', '%s', '$img1', '$img2', '$img3', now())";
+        "VALUES ($user_id, $store_id, '$star', '%s', $img1, $img2, $img3, now())";
     $sql = sprintf($sql,
         mysqli_real_escape_string($conn, $content));
     $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
