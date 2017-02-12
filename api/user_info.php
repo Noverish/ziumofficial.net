@@ -14,6 +14,7 @@
     $data = mysqli_fetch_assoc($result);
 
     $data = array('res' => 1, 'msg' => 'success') + $data;
+    $data["has_noti"] = $data["has_noti"] != 0;
 
     echo raw_json_encode($data);
 ?>
