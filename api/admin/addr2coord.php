@@ -56,7 +56,7 @@
             continue;
         }
 
-
+        $addr = "";
         $tmp = $data[$i]["지번주소"];
         $tmp = trim($tmp);
         echo("지번주소 : '".$tmp."' ");
@@ -71,7 +71,7 @@
             $addr = $tmp;
         }
 
-        if($addr) {
+        if(strcmp($addr, "") != 0) {
             echo(" -> ");
 
             $addr = urlencode($addr);
@@ -82,7 +82,7 @@
             $csv->data[$i]["위도"] = $json["channel"]["item"][0]["lat"];
             $csv->data[$i]["경도"] = $json["channel"]["item"][0]["lng"];
 
-            echo($csv->data[$i]["위도"].", ".$csv->data[$i]["경도"]."<br>");
+            echo($csv->data[$i]["위도"].", ".$csv->data[$i]["경도"]);
 
             $csv->encoding('UTF-8', 'euc-kr');
             $csv->save();
