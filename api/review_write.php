@@ -30,6 +30,7 @@
 
     $res["res"] = 1;
     $res["msg"] = "success";
+    $res["review_id"] = mysqli_insert_id($conn);
 
     echo raw_json_encode($res);
 
