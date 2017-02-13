@@ -7,13 +7,14 @@
     if(!is_numeric($store_id)) print_error_and_die("store_id is not number");
     if(!is_numeric($user_id)) print_error_and_die("user_id is not number");
 
-    $sql_store = "SELECT *, Event.img_main as event_main, Event.img_detail as event_detail, ".
+    $sql_store = "SELECT *, ".
+                 "(SELECT img_main FROM Event WHERE store_id = $store_id AND is_open = 1) as event_main, ".
+                 "(SELECT img_main FROM Event WHERE store_id = $store_id AND is_open = 1) as event_detail, ".
                  "(SELECT ROUND(IFNULL(AVG(star_rate), 0), 1) FROM Review WHERE store_id = $store_id) as star_average, ".
                  "(SELECT COUNT(_id) FROM Review WHERE store_id = $store_id) as review_num,".
                  "(SELECT COUNT(_id) FROM UserDibs WHERE store_id = $store_id) as dibs_num, ".
                  "(SELECT IF(COUNT(_id) > 0, 1, 0) FROM UserDibs WHERE user_id = $user_id AND store_id = Store._id) as is_user_dib ".
                  "FROM Store ".
-                 "INNER JOIN Event ON Store._id = Event.store_id ".
                  "WHERE Store._id = $store_id";
     $result_store = mysqli_query($conn, $sql_store) or print_sql_error_and_die($conn, $sql_store);
     $res = mysqli_fetch_assoc($result_store);
