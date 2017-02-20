@@ -34,59 +34,75 @@
         return $res;
     }
 
-    require_once 'parsecsv-for-php/parsecsv.lib.php';
+    function addr2coord($addr) {
+        $addr = urlencode($addr);
+        $url = "https://apis.daum.net/local/geo/addr2coord?apikey=15cb592fbb45aa138cc902dbc2d9b5bf&q='$addr'&output=json";
+        $html = getFromUrl($url, 'GET');
+        $json = json_decode($html, true);
 
-    header('Content-type:text/html;charset=utf-8');
-
-    $csv = new parseCSV();
-    $csv->encoding('euc-kr', 'UTF-8');
-    $csv->parse('store_data.csv');
-
-    $data = $csv->data;
-    $length = count($data);
-
-    for($i = 0; $i < $length; $i++) {
-        echo('<br>');
-
-        echo("위도 : '".$csv->data[$i]["위도"]."' ");
-        echo("경도 : '".$csv->data[$i]["경도"]."' ");
-
-        if($csv->data[$i]["위도"] && $csv->data[$i]["위도"]) {
-            echo("continue");
-            continue;
+        if($json["channel"]["totalCount"] > 0) {
+            $data["lat"] = $json["channel"]["item"][0]["lat"];
+            $data["lng"] = $json["channel"]["item"][0]["lng"];
+        } else {
+            $data["json"] = $html;
         }
 
-        $addr = "";
-        $tmp = $data[$i]["지번주소"];
-        $tmp = trim($tmp);
-        echo("지번주소 : '".$tmp."' ");
-        if(strcmp($tmp, "") != 0) {
-            $addr = $tmp;
-        }
-
-        $tmp = $data[$i]["도로명주소"];
-        $tmp = trim($tmp);
-        echo("도로명주소 : '".$tmp."' ");
-        if(strcmp($tmp, "") != 0) {
-            $addr = $tmp;
-        }
-
-        if(strcmp($addr, "") != 0) {
-            echo(" -> ");
-
-            $addr = urlencode($addr);
-            $url = "https://apis.daum.net/local/geo/addr2coord?apikey=15cb592fbb45aa138cc902dbc2d9b5bf&q='$addr'&output=json";
-            $html = getFromUrl($url, 'GET');
-            $json = json_decode($html, true);
-
-            $csv->data[$i]["위도"] = $json["channel"]["item"][0]["lat"];
-            $csv->data[$i]["경도"] = $json["channel"]["item"][0]["lng"];
-
-            echo($csv->data[$i]["위도"].", ".$csv->data[$i]["경도"]);
-
-            $csv->encoding('UTF-8', 'euc-kr');
-            $csv->save();
-            $csv->encoding('euc-kr', 'UTF-8');
-        }
+        return $data;
     }
+    //
+    // require_once 'parsecsv-for-php/parsecsv.lib.php';
+    //
+    // header('Content-type:text/html;charset=utf-8');
+    //
+    // $csv = new parseCSV();
+    // $csv->encoding('euc-kr', 'UTF-8');
+    // $csv->parse('store_data.csv');
+    //
+    // $data = $csv->data;
+    // $length = count($data);
+    //
+    // for($i = 0; $i < $length; $i++) {
+    //     echo('<br>');
+    //
+    //     echo("위도 : '".$csv->data[$i]["위도"]."' ");
+    //     echo("경도 : '".$csv->data[$i]["경도"]."' ");
+    //
+    //     if($csv->data[$i]["위도"] && $csv->data[$i]["위도"]) {
+    //         echo("continue");
+    //         continue;
+    //     }
+    //
+    //     $addr = "";
+    //     $tmp = $data[$i]["지번주소"];
+    //     $tmp = trim($tmp);
+    //     echo("지번주소 : '".$tmp."' ");
+    //     if(strcmp($tmp, "") != 0) {
+    //         $addr = $tmp;
+    //     }
+    //
+    //     $tmp = $data[$i]["도로명주소"];
+    //     $tmp = trim($tmp);
+    //     echo("도로명주소 : '".$tmp."' ");
+    //     if(strcmp($tmp, "") != 0) {
+    //         $addr = $tmp;
+    //     }
+    //
+    //     if(strcmp($addr, "") != 0) {
+    //         echo(" -> ");
+    //
+    //         $addr = urlencode($addr);
+    //         $url = "https://apis.daum.net/local/geo/addr2coord?apikey=15cb592fbb45aa138cc902dbc2d9b5bf&q='$addr'&output=json";
+    //         $html = getFromUrl($url, 'GET');
+    //         $json = json_decode($html, true);
+    //
+    //         $csv->data[$i]["위도"] = $json["channel"]["item"][0]["lat"];
+    //         $csv->data[$i]["경도"] = $json["channel"]["item"][0]["lng"];
+    //
+    //         echo($csv->data[$i]["위도"].", ".$csv->data[$i]["경도"]);
+    //
+    //         $csv->encoding('UTF-8', 'euc-kr');
+    //         $csv->save();
+    //         $csv->encoding('euc-kr', 'UTF-8');
+    //     }
+    // }
 ?>
