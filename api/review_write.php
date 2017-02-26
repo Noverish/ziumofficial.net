@@ -5,7 +5,7 @@
     ($user_id = $_POST["user_id"]) != NULL or print_error_and_die("There is no user_id");
     ($store_id = $_POST["store_id"]) != NULL or print_error_and_die("There is no store_id");
     ($star = $_POST["star"]) != NULL or print_error_and_die("There is no star");
-    ($content = $_POST["content"]) != NULL or print_error_and_die("There is no content");
+    ($content = $_POST["content"]) != NULL or ($content = "");
     ($img1 = $_POST["img1"]) != NULL or ($img1 = "NULL");
     ($img2 = $_POST["img2"]) != NULL or ($img2 = "NULL");
     ($img3 = $_POST["img3"]) != NULL or ($img3 = "NULL");
