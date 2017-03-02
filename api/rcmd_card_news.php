@@ -8,7 +8,7 @@
 
     if_not_valid_rcmd_id_then_die($rcmd_id);
 
-    $sql="SELECT img, store_id FROM CardNews WHERE rcmd_id = $rcmd_id ORDER BY position ASC";
+    $sql="SELECT img, IFNULL(store_id, -1) as store_id FROM CardNews WHERE rcmd_id = $rcmd_id ORDER BY position ASC";
     $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
 
     $res["res"] = 1;

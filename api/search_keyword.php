@@ -9,6 +9,8 @@
     if($page < 1) print_error_and_die("page must be bigger than 0");
     $page_offset = $PAGE_SIZE * ($page - 1);
 
+    $keyword = str_replace(" ","",$keyword);
+
     $sql =
         "SELECT _id as store_id, name as store_name, ".
         "(SELECT ROUND(IFNULL(AVG(star_rate), 0), 1) FROM Review WHERE store_id = Store._id) as star_average, ".
@@ -17,7 +19,7 @@
         "img as store_img, is_new, ".
         "(SELECT IF(COUNT(_id) = 0, 0, 1) FROM Event WHERE store_id = Store._id) as is_event ".
         "FROM Store ".
-        "WHERE (name LIKE '%%%s%%') ".
+        "WHERE (REPLACE(name, ' ', '') LIKE '%%%s%%') ".
         "LIMIT $page_offset, $PAGE_SIZE ";
     $sql = sprintf($sql,
         mysqli_real_escape_string($conn, $keyword));

@@ -26,7 +26,7 @@
         $sql_score = "UPDATE User SET score = score + $SCORE_ATTEND WHERE _id = $user_id";
         mysqli_query($conn, $sql_score);
     } else {
-        $sql_score = "UPDATE HistoryLogin SET login_today = login_today + 1 WHERE user_id = $user_id AND date = now()";
+        $sql_score = "UPDATE HistoryLogin SET login_today = login_today + 1 WHERE user_id = $user_id AND date = date(now())";
         mysqli_query($conn, $sql_score);
     }
 ?>

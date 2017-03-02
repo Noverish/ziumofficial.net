@@ -11,10 +11,15 @@
         "(SELECT COUNT(*) > 0 FROM UserMsg WHERE user_id = User._id AND is_user_sent = FALSE AND is_user_read = FALSE) AS has_noti ".
         "FROM User WHERE _id = $user_id";
     $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
-    $data = mysqli_fetch_assoc($result);
-
-    $data = array('res' => 1, 'msg' => 'success') + $data;
-    $data["has_noti"] = $data["has_noti"] != 0;
+    if($result == null || $result == false ||mysqli_num_rows($result) == 0) {
+        $data['res'] = 0;
+        $data['msg'] = "There is no user whose id is $user_id";
+    } else {
+        $data = mysqli_fetch_assoc($result);
+        $data['res'] = 1;
+        $date['msg'] = 'success';
+        $data["has_noti"] = $data["has_noti"] != 0;
+    }
 
     echo raw_json_encode($data);
 ?>
