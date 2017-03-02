@@ -1,6 +1,6 @@
 <?php
     include('../../config.php');
-    header('Content-type:text/html;');
+    header('Content-type:text/html;charset=utf-8');
 
     ($key = $_POST["key"]) != NULL or print_error_and_die("There is no key");
 
