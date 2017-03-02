@@ -14,9 +14,9 @@
     if($key != 1415926)
         print_error_and_die("key is wrong");
 
-    $name = mysqli_real_escape_string($conn, $name);
+    $name_escape = mysqli_real_escape_string($conn, $name);
 
-    $sql = "UPDATE Store SET lat = '$lat', lng = '$lng' WHERE name = '$name'";
+    $sql = "UPDATE Store SET lat = '$lat', lng = '$lng' WHERE name = '$name_escape'";
     $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
 
     if(mysqli_affected_rows($conn) > 0) {
