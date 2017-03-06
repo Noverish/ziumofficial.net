@@ -11,19 +11,32 @@
 
     $keyword = str_replace(" ","",$keyword);
 
+    $value = 0;
+    if(strpos($keyword, "배달") !== false) $value += pow(2, 0);
+    if(strpos($keyword, "포장") !== false) $value += pow(2, 1);
+    if(strpos($keyword, "예약") !== false) $value += pow(2, 3) + pow(2, 9);
+    if(strpos($keyword, "대관") !== false) $value += pow(2, 4);
+    if(strpos($keyword, "단체석") !== false) $value += pow(2, 5) + pow(2, 10);
+    if(strpos($keyword, "좌식") !== false) $value += pow(2, 6);
+    if(strpos($keyword, "흡연실") !== false) $value += pow(2, 7);
+    if(strpos($keyword, "1인석") !== false) $value += pow(2, 8);
+
     $sql =
-        "SELECT _id as store_id, name as store_name, ".
-        "(SELECT ROUND(IFNULL(AVG(star_rate), 0), 1) FROM Review WHERE store_id = Store._id) as star_average, ".
-        "(SELECT COUNT(_id) FROM Review WHERE store_id = Store._id) as review_num, ".
-        "(SELECT COUNT(_id) FROM UserDibs WHERE store_id = Store._id) as dibs_num, ".
-        "img as store_img, is_new, ".
-        "(SELECT IF(COUNT(_id) = 0, 0, 1) FROM Event WHERE store_id = Store._id) as is_event ".
-        "FROM Store ".
-        "WHERE (REPLACE(name, ' ', '') LIKE '%%%s%%') ".
+        "SELECT ViewStorePreview.* FROM StoreKeyword ".
+        "INNER JOIN ViewStorePreview ON ViewStorePreview.store_id = StoreKeyword.store_id ".
+        "WHERE REPLACE(keyword, ' ', '') LIKE '%%%s%%' ".
+        "UNION ".
+        "SELECT * FROM ViewStorePreview ".
+        "WHERE REPLACE(store_name, ' ', '') LIKE '%%%s%%' ".
+        "UNION ".
+        "SELECT ViewStorePreview.* FROM Store ".
+        "INNER JOIN ViewStorePreview ON ViewStorePreview.store_id = Store._id ".
+        "WHERE (property & $value != 0) ".
         "LIMIT $page_offset, $PAGE_SIZE ";
     $sql = sprintf($sql,
+        mysqli_real_escape_string($conn, $keyword),
         mysqli_real_escape_string($conn, $keyword));
-    $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
+    $result = mysqli_query($conn, $sql) or print_sql_error_and_die($conn, $sql);
 
     $res["res"] = 1;
     $res["msg"] = "success";
