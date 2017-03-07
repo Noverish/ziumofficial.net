@@ -43,4 +43,9 @@
     $res["stores"] = query_result_to_array($result);
 
     echo raw_json_encode($res);
+
+    $escape_keyword = mysqli_real_escape_string($conn, $keyword);
+
+    $history = "INSERT INTO HistorySearchKeyword (user_id, keyword, date) VALUES (1, '$escape_keyword', now())";
+    $result = mysqli_query($conn, $history);
 ?>

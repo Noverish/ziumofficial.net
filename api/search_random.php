@@ -19,4 +19,7 @@
     $res["data"] = query_result_to_array($result);
 
     echo raw_json_encode($res);
+
+    $history = "INSERT INTO HistorySearchRandom (user_id, category, region, type1, type2, date) VALUES (1, $category, $region, $type1, $type2, now())";
+    $result = mysqli_query($conn, $history);
 ?>
