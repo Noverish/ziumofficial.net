@@ -41,17 +41,17 @@
         if(mysqli_num_rows($result) <= $SCORE_SENT_LIKE_MAX) {
             $sql = "UPDATE User SET score = score + $SCORE_SENT_LIKE WHERE _id = $user_id";
             $result = mysqli_query($conn, $sql);
-
-            $sql = "UPDATE User SET score = score + $SCORE_RCVD_LIKE WHERE _id = (SELECT user_id FROM Review WHERE _id = $review_id)";
-            $result = mysqli_query($conn, $sql);
         }
+
+        $sql = "UPDATE User SET score = score + $SCORE_RCVD_LIKE WHERE _id = (SELECT user_id FROM Review WHERE _id = $review_id)";
+        $result = mysqli_query($conn, $sql);
     } else {
         if(mysqli_num_rows($result) < $SCORE_SENT_LIKE_MAX) {
             $sql = "UPDATE User SET score = score - $SCORE_SENT_LIKE WHERE _id = $user_id";
             $result = mysqli_query($conn, $sql);
-
-            $sql = "UPDATE User SET score = score - $SCORE_RCVD_LIKE WHERE _id = (SELECT user_id FROM Review WHERE _id = $review_id)";
-            $result = mysqli_query($conn, $sql);
         }
+
+        $sql = "UPDATE User SET score = score - $SCORE_RCVD_LIKE WHERE _id = (SELECT user_id FROM Review WHERE _id = $review_id)";
+        $result = mysqli_query($conn, $sql);
     }
 ?>
