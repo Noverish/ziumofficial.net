@@ -16,9 +16,9 @@
     if(strpos($keyword, "포장") !== false) $value += pow(2, 1);
     if(strpos($keyword, "예약") !== false) $value += pow(2, 3) + pow(2, 9);
     if(strpos($keyword, "대관") !== false) $value += pow(2, 4);
-    if(strpos($keyword, "단체석") !== false) $value += pow(2, 5) + pow(2, 10);
+    if(strpos($keyword, "단체") !== false) $value += pow(2, 5) + pow(2, 10);
     if(strpos($keyword, "좌식") !== false) $value += pow(2, 6);
-    if(strpos($keyword, "흡연실") !== false) $value += pow(2, 7);
+    if(strpos($keyword, "흡연") !== false) $value += pow(2, 7);
     if(strpos($keyword, "1인석") !== false) $value += pow(2, 8);
 
     $sql =
