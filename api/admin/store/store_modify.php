@@ -1,13 +1,13 @@
 <?php
-    include('../config.php');
-    include('../query_func.php');
+    include('../../config.php');
+    include('../../query_func.php');
 
     ($name = $_POST["name"]) != NULL or print_error_and_die("There is no name");
     ($category = $_POST["category"]) != NULL or print_error_and_die("There is no category");
     ($region = $_POST["region"]) != NULL or print_error_and_die("There is no region");
     ($type1 = $_POST["type1"]) != NULL or print_error_and_die("There is no type1");
     ($type2 = $_POST["type2"]) != NULL or print_error_and_die("There is no type2");
-    ($img = $_POST["img"]) != NULL or print_error_and_die("There is no img");
+    ($img = $_POST["img"]) != NULL or ($img = "DEFAULT");
     ($owner_comment = $_POST["owner_comment"]) != NULL or ($owner_comment = "NULL");
     ($contact = $_POST["contact"]) != NULL or ($contact = "NULL");
     ($store_hours = $_POST["store_hours"]) != NULL or ($store_hours = "");
@@ -37,18 +37,50 @@
     $addr_old = mysqli_real_escape_string($conn, $addr_old);
     $addr_new = mysqli_real_escape_string($conn, $addr_new);
 
+    if(strcmp($img,"DEFAULT") != 0) $img = "'$img'";
     if(strcmp($owner_comment,"NULL") != 0) $owner_comment = "'$owner_comment'";
     if(strcmp($contact,"NULL") != 0) $contact = "'$contact'";
     if(strcmp($addr_old,"NULL") != 0) $addr_old = "'$addr_old'";
     if(strcmp($addr_new,"NULL") != 0) $addr_new = "'$addr_new'";
 
-    $sql = "INSERT INTO Store (name, category, region, type1, type2, img, owner_comment, contact, store_hours, property, property_show, note, lat, lng, addr_old, addr_new, is_new, views, keyword) VALUES ".
-           "('$name', $category, $region, $type1, $type2, '$img', $owner_comment, $contact, '$store_hours', $property, $property_show, '$note', $lat, $lng, $addr_old, $addr_new, 0, 0, '')";
+    $sql = "SELECT _id FROM Store WHERE name = '$name'";
     $result = mysqli_query($conn, $sql) or print_sql_error_and_die($conn, $sql);
 
-    $res["res"] = 1;
-    $res["msg"] = "success";
-    $res["store_id"] = mysqli_insert_id($conn);
+    if(mysqli_num_rows($result) == 0) {
+        $sql = "INSERT INTO Store (name, category, region, type1, type2, img, owner_comment, contact, store_hours, property, property_show, note, lat, lng, addr_old, addr_new, is_new, views) VALUES ".
+               "('$name', $category, $region, $type1, $type2, $img, $owner_comment, $contact, '$store_hours', $property, $property_show, '$note', $lat, $lng, $addr_old, $addr_new, 0, 0)";
+        $result = mysqli_query($conn, $sql) or print_sql_error_and_die($conn, $sql);
+
+        $res["res"] = 1;
+        $res["msg"] = "insert success";
+        $res["store_id"] = mysqli_insert_id($conn);
+    } else {
+        $row = mysqli_fetch_array($result);
+        $store_id = $row[0];
+
+        $sql = "UPDATE Store SET ".
+                "category = $category, ".
+                "region = $region, ".
+                "type1 = $type1, ".
+                "type2 = $type2, ".
+                "img = $img, ".
+                "owner_comment = $owner_comment, ".
+                "contact = $contact, ".
+                "store_hours = '$store_hours', ".
+                "property = $property, ".
+                "property_show = $property_show, ".
+                "note = '$note', ".
+                "lat = $lat, ".
+                "lng = $lng, ".
+                "addr_old = $addr_old, ".
+                "addr_new = $addr_new ".
+                "WHERE name = '$name'";
+        $result = mysqli_query($conn, $sql) or print_sql_error_and_die($conn, $sql);
+
+        $res["res"] = 1;
+        $res["msg"] = "modify success";
+        $res["store_id"] = $store_id;
+    }
 
     echo raw_json_encode($res);
 ?>
