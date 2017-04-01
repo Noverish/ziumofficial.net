@@ -2,6 +2,24 @@
     if(strcmp($_POST["key"], "!@#$") != 0)
         die("invalid key");
 
+    if(!isset($_POST["category"]))
+        $_POST["category"] = array();
+
+    if(!isset($_POST["region"]))
+        $_POST["region"] = array();
+
+    if(!isset($_POST["type1"]))
+        $_POST["type1"] = array();
+
+    if(!isset($_POST["type2"]))
+        $_POST["type2"] = array();
+
+    if(!isset($_POST["property"]))
+        $_POST["property"] = array();
+
+    if(!isset($_POST["property_show"]))
+        $_POST["property_show"] = array();
+
     $categorys = $_POST["category"];
     $regions = $_POST["region"];
     $type1s = $_POST["type1"];
