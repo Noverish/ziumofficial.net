@@ -14,14 +14,28 @@
     $now->sub(new DateInterval("P3D"));
     $now_str = $now->format("Y-m-d H:i:s");
 
-    $sql_review =
-        "SELECT Review._id as review_id, Store._id as store_id, Store.name as store_name, ".
-        "user_id, User.user_name, User.is_owner, star_rate, content, img1, img2, img3, ".
-        "(SELECT COUNT(_id) FROM UserLikes WHERE review_id = Review._id) as like_num, ".
-        "(SELECT COUNT(_id) FROM Comment WHERE review_id = Review._id) as comment_num, write_date, modify_date ".
-        "FROM Review ".
-        "INNER JOIN User ON User._id = Review.user_id ".
-        "INNER JOIN Store On Store._id = Review.store_id ";
+    if(isset($_POST["user_id"])) {
+        $user_id = $_POST["user_id"];
+
+        $sql_review =
+            "SELECT Review._id as review_id, Store._id as store_id, Store.name as store_name, ".
+            "user_id, User.user_name, User.is_owner, star_rate, content, img1, img2, img3, ".
+            "(SELECT COUNT(_id) FROM UserLikes WHERE review_id = Review._id) as like_num, ".
+            "(SELECT COUNT(_id) FROM Comment WHERE review_id = Review._id) as comment_num, write_date, modify_date, ".
+            "(SELECT COUNT(_id) FROM UserLikes WHERE UserLikes.user_id = $user_id && UserLikes.review_id = Review._id) as is_user_liked ".
+            "FROM Review ".
+            "INNER JOIN User ON User._id = Review.user_id ".
+            "INNER JOIN Store On Store._id = Review.store_id ";
+    } else {
+        $sql_review =
+            "SELECT Review._id as review_id, Store._id as store_id, Store.name as store_name, ".
+            "user_id, User.user_name, User.is_owner, star_rate, content, img1, img2, img3, ".
+            "(SELECT COUNT(_id) FROM UserLikes WHERE review_id = Review._id) as like_num, ".
+            "(SELECT COUNT(_id) FROM Comment WHERE review_id = Review._id) as comment_num, write_date, modify_date ".
+            "FROM Review ".
+            "INNER JOIN User ON User._id = Review.user_id ".
+            "INNER JOIN Store On Store._id = Review.store_id ";
+    }
 
     if($sort == 0)
         $sql_review .= "WHERE write_date >= '$now_str' ORDER BY like_num DESC ";

@@ -15,15 +15,30 @@
     if($page < 1) print_error_and_die("page must be bigger than 0");
     $page_offset = $PAGE_SIZE * ($page - 1);
 
-    $sql_review =
-        "SELECT Review._id as review_id, Store._id as store_id, Store.name as store_name, ".
-        "user_id, User.user_name, User.is_owner, star_rate, content, img1, img2, img3, ".
-        "(SELECT COUNT(_id) FROM UserLikes WHERE review_id = Review._id) as like_num, ".
-        "(SELECT COUNT(_id) FROM Comment WHERE review_id = Review._id) as comment_num, write_date, modify_date ".
-        "FROM Review ".
-        "INNER JOIN User ON User._id = Review.user_id ".
-        "INNER JOIN Store On Store._id = Review.store_id ".
-        "WHERE store_id = $store_id ";
+    if(isset($_POST["user_id"])) {
+        $user_id = $_POST["user_id"];
+
+        $sql_review =
+            "SELECT Review._id as review_id, Store._id as store_id, Store.name as store_name, ".
+            "user_id, User.user_name, User.is_owner, star_rate, content, img1, img2, img3, ".
+            "(SELECT COUNT(_id) FROM UserLikes WHERE review_id = Review._id) as like_num, ".
+            "(SELECT COUNT(_id) FROM Comment WHERE review_id = Review._id) as comment_num, write_date, modify_date, ".
+            "(SELECT COUNT(_id) FROM UserLikes WHERE user_id = $user_id && review_id = Review._id) AS is_user_liked ".
+            "FROM Review ".
+            "INNER JOIN User ON User._id = Review.user_id ".
+            "INNER JOIN Store On Store._id = Review.store_id ".
+            "WHERE store_id = $store_id ";
+    } else {
+        $sql_review =
+            "SELECT Review._id as review_id, Store._id as store_id, Store.name as store_name, ".
+            "user_id, User.user_name, User.is_owner, star_rate, content, img1, img2, img3, ".
+            "(SELECT COUNT(_id) FROM UserLikes WHERE review_id = Review._id) as like_num, ".
+            "(SELECT COUNT(_id) FROM Comment WHERE review_id = Review._id) as comment_num, write_date, modify_date, 0 AS is_user_liked ".
+            "FROM Review ".
+            "INNER JOIN User ON User._id = Review.user_id ".
+            "INNER JOIN Store On Store._id = Review.store_id ".
+            "WHERE store_id = $store_id ";
+    }
 
     if($sort == 0)
         $sql_review .= "ORDER BY like_num DESC ";

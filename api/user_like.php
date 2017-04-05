@@ -17,7 +17,8 @@
         "SELECT Review._id as review_id, Store._id as store_id, Store.name as store_name, ".
         "Review.user_id, User.user_name, User.is_owner, star_rate, content, img1, img2, img3, ".
         "(SELECT COUNT(_id) FROM UserLikes WHERE review_id = Review._id) as like_num, ".
-        "(SELECT COUNT(_id) FROM Comment WHERE review_id = Review._id) as comment_num, write_date, modify_date ".
+        "(SELECT COUNT(_id) FROM Comment WHERE review_id = Review._id) as comment_num, write_date, modify_date, ".
+        "(SELECT 1) as is_user_liked ".
         "FROM UserLikes ".
         "INNER JOIN Review ON Review._id = UserLikes.review_id ".
         "INNER JOIN User ON User._id = Review.user_id ".
