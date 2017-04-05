@@ -1,12 +1,12 @@
 <?php
     include_once('config.php');
 
-    $is_android = $_POST["is_android"] or print_error_and_die("There is is_android");
+    ($is_android = $_POST["is_android"]) != NULL or print_error_and_die("There is is_android");
 
     if($is_android) {
         $res["version"] = "1.1.3";
     } else {
-        $res["version"] = "0.0.0";
+        $res["version"] = "1.1.2";
     }
 
     $res["res"] = 1;
