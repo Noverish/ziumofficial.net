@@ -1,6 +1,4 @@
 <?php
-    include_once('../config.php');
-
     function send_noti($user_id, $title, $content, $ticker) {
         $SERVER_KEY = "AAAARCNNKRI:APA91bGwIaaysS3M9vGv-QYnOkTqjIiyWH3Jz3fPkLisqQlMhr-d85BjEBkodCDa4cu_Ha3umqZt5ES2g-CNoznqw6SImMfZm6ft4fSEB1CDQ8fv6V5XugNZUAe5XWyO2jxg7m0A8fge";
         global $conn;

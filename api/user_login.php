@@ -4,7 +4,7 @@
     ($kakaoID = $_POST['kakaoID']) != NULL or print_error_and_die("There is no kakaoID");
     $token = isset($_POST['token']) ? "'".$_POST['token']."'" : "NULL";
 
-    $sql = sprintf("SELECT _id, (SELECT COUNT(*) > 0 FROM UserMsg WHERE user_id = User._id AND is_user_sent = FALSE AND is_user_read = FALSE) AS has_noti FROM User WHERE kakaoID = %s",
+    $sql = sprintf("SELECT _id, (SELECT COUNT(*) > 0 FROM UserMsg WHERE user_id = User._id AND is_user_sent = FALSE AND is_user_read = FALSE) AS has_noti, push FROM User WHERE kakaoID = %s",
         mysqli_real_escape_string($conn, $kakaoID));
     $result = mysqli_query($conn, $sql) or print_sql_error_and_die($conn, $sql);
     $row = mysqli_fetch_array($result);
@@ -17,6 +17,7 @@
         $res["msg"] = "success";
         $res["user_id"] = $row["_id"];
         $res["has_noti"] = $row["has_noti"] != 0;
+        $res["push"] = $row["push"];
     }
 
     echo raw_json_encode($res);
