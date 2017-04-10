@@ -17,6 +17,12 @@
         $write_date = $row['write_date'];
     }
 
+    $sql = "DELETE FROM UserLikes WHERE review_id = $review_id";
+    $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
+
+    $sql = "DELETE FROM Comment WHERE review_id = $review_id";
+    $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
+
     $sql = "DELETE FROM Review WHERE _id = $review_id";
     $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
 
