@@ -10,7 +10,11 @@
     if($page < 1) print_error_and_die("page must be bigger than 0");
     $page_offset = $PAGE_SIZE * ($page - 1);
 
-    $sql="SELECT *, (SELECT COUNT(*) FROM ArticleLike WHERE user_id = $user_id && article_id = ViewArticle.article_id) AS is_user_liked FROM ViewArticle LIMIT $page_offset, $PAGE_SIZE";
+    $sql="SELECT *, ".
+         "(SELECT COUNT(*) FROM ArticleLike WHERE user_id = $user_id && article_id = ViewArticle.article_id) AS is_user_liked ".
+         "FROM ViewArticle ".
+         "ORDER BY article_id DESC ".
+         "LIMIT $page_offset, $PAGE_SIZE";
     $result = mysqli_query($conn, $sql) or print_sql_error_and_die($conn, $sql);
 
     $res["res"] = 1;
