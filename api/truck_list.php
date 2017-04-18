@@ -1,7 +1,13 @@
 <?php
     include('config.php');
 
-    $sql="SELECT _id as truck_id, name, location, status, note FROM Truck";
+    $sql = "(SELECT _id as truck_id, name, location, status, note FROM Truck WHERE status = 1)".
+           "UNION".
+           "(SELECT _id as truck_id, name, location, status, note FROM Truck WHERE status = 0)".
+           "UNION".
+           "(SELECT _id as truck_id, name, location, status, note FROM Truck WHERE status = 2)";
+
+    // $sql="SELECT _id as truck_id, name, location, status, note FROM Truck";
     $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
 
     $res["res"] = 1;
