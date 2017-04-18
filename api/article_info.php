@@ -1,10 +1,10 @@
 <?php
     include('config.php');
 
+    ($user_id = $_POST["user_id"]) != NULL or print_error_and_die("There is no user_id");
     ($article_id = $_POST["article_id"]) != NULL or print_error_and_die("There is no article_id");
-    ($user_id = $_POST["user_id"]) != NULL or $user_id = -1;
-    ($is_android = $_POST["is_android"]) != NULL or $is_android = -1;
-    ($app_version = $_POST["app_version"]) != NULL or $app_version = "0.0.0";
+    $is_android = isset($_POST['is_android']) ? "'".$_POST['is_android']."'" : "NULL";
+    $app_version = isset($_POST['app_version']) ? "'".$_POST['app_version']."'" : "NULL";
 
     if(!is_numeric($article_id)) print_error_and_die("article_id is not number");
 
@@ -17,6 +17,9 @@
 
     echo raw_json_encode($row);
 
-    $sql = "INSERT INTO HistoryArticle (article_id, user_id, date, is_android, app_version) VALUES ($article_id, $user_id, now(), $is_android, '$app_version')";
+    $sql = "UPDATE Article SET views = views + 1 WHERE _id = $article_id";
+    $result = mysqli_query($conn, $sql);
+
+    $sql = "INSERT INTO HistoryArticle (article_id, user_id, date, is_android, app_version) VALUES ($article_id, $user_id, now(), $is_android, $app_version)";
     $result = mysqli_query($conn, $sql);
 ?>

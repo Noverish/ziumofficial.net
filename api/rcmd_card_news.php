@@ -3,6 +3,9 @@
     include('query_func.php');
 
     ($rcmd_id = $_POST["rcmd_id"]) != NULL or print_error_and_die("There is no rcmd_id");
+    $user_id = isset($_POST['user_id']) ? "'".$_POST['user_id']."'" : "NULL";
+    $is_android = isset($_POST['is_android']) ? "'".$_POST['is_android']."'" : "NULL";
+    $app_version = isset($_POST['app_version']) ? "'".$_POST['app_version']."'" : "NULL";
 
     if(!is_numeric($rcmd_id)) print_error_and_die("rcmd_id is not number");
 
@@ -18,5 +21,8 @@
     echo raw_json_encode($res);
 
     $sql_views = "UPDATE Rcmd SET views = views + 1 WHERE _id = $rcmd_id";
-    mysqli_query($conn, $sql_views)
+    $result = mysqli_query($conn, $sql_views);
+
+    $sql = "INSERT INTO HistoryRcmd (user_id, rcmd_id, date, is_android, app_version) VALUES ($user_id, $rcmd_id, now(), $is_android, $app_version)";
+    $result = mysqli_query($conn, $sql);
 ?>

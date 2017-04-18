@@ -1,8 +1,11 @@
 <?php
     include('config.php');
 
+    $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : "NULL";
     ($keyword = $_POST["keyword"]) != NULL or print_error_and_die("There is no keyword");
     ($page = $_POST["page"]) != NULL or print_error_and_die("There is no page");
+    $is_android = isset($_POST['is_android']) ? "'".$_POST['is_android']."'" : "NULL";
+    $app_version = isset($_POST['app_version']) ? "'".$_POST['app_version']."'" : "NULL";
 
     if(!is_numeric($page)) print_error_and_die("page is not number");
 
@@ -46,6 +49,6 @@
 
     $escape_keyword = mysqli_real_escape_string($conn, $keyword);
 
-    $history = "INSERT INTO HistorySearchKeyword (user_id, keyword, date) VALUES (1, '$escape_keyword', now())";
+    $history = "INSERT INTO HistorySearchKeyword (user_id, keyword, date, is_android, app_version) VALUES ($user_id, '$escape_keyword', now(), $is_android, $app_version)";
     $result = mysqli_query($conn, $history);
 ?>

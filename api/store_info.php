@@ -3,6 +3,8 @@
 
     ($store_id = $_POST["store_id"]) != NULL or print_error_and_die("There is no store_id");
     ($user_id = $_POST["user_id"]) != NULL or print_error_and_die("There is no user_id");
+    $is_android = isset($_POST['is_android']) ? "'".$_POST['is_android']."'" : "NULL";
+    $app_version = isset($_POST['app_version']) ? "'".$_POST['app_version']."'" : "NULL";
 
     if(!is_numeric($store_id)) print_error_and_die("store_id is not number");
     if(!is_numeric($user_id)) print_error_and_die("user_id is not number");
@@ -44,5 +46,8 @@
     echo raw_json_encode($res);
 
     $sql_views = "UPDATE Store SET views = views + 1 WHERE _id = $store_id";
-    mysqli_query($conn, $sql_views)
+    mysqli_query($conn, $sql_views);
+
+    $sql = "INSERT INTO HistoryStore (user_id, store_id, date, is_android, app_version) VALUES ($user_id, $store_id, now(), $is_android, $app_version)";
+    $result = mysqli_query($conn, $sql);
 ?>

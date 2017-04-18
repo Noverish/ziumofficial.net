@@ -1,12 +1,15 @@
 <?php
     include('config.php');
 
+    $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : "NULL";
     ($category = $_POST["category"]) != NULL or print_error_and_die("There is no category");
     ($region = $_POST["region"]) != NULL or print_error_and_die("There is no region");
     ($type1 = $_POST["type1"]) != NULL or print_error_and_die("There is no type1");
     ($type2 = $_POST["type2"]) != NULL or print_error_and_die("There is no type2");
     ($sort = $_POST["sort"]) != NULL or print_error_and_die("There is no sort");
     ($page = $_POST["page"]) != NULL or print_error_and_die("There is no page");
+    $is_android = isset($_POST['is_android']) ? "'".$_POST['is_android']."'" : "NULL";
+    $app_version = isset($_POST['app_version']) ? "'".$_POST['app_version']."'" : "NULL";
 
     if(!is_numeric($category)) print_error_and_die("category is not number");
     if(!is_numeric($region)) print_error_and_die("region is not number");
@@ -46,6 +49,6 @@
 
     echo raw_json_encode($res);
 
-    $history = "INSERT INTO HistorySearchOption (user_id, category, region, type1, type2, date) VALUES (1, $category, $region, $type1, $type2, now())";
+    $history = "INSERT INTO HistorySearchOption (user_id, category, region, type1, type2, date, is_android, app_version) VALUES ($user_id, $category, $region, $type1, $type2, now(), $is_android, $app_version)";
     $result = mysqli_query($conn, $history);
 ?>
