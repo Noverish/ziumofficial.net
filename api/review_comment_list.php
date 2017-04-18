@@ -14,7 +14,7 @@
     if_not_valid_review_id_then_die($review_id);
 
     $sql=
-        "SELECT Comment._id as comment_id, user_id, User.user_name, User.is_owner, content, date ".
+        "SELECT review_id, Comment._id as comment_id, user_id, User.user_name, User.is_owner, content, date ".
         "FROM Comment ".
         "INNER JOIN User ON User._id = Comment.user_id ".
         "WHERE review_id = $review_id ".
