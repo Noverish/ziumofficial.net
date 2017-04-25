@@ -14,7 +14,7 @@
     if(!is_numeric($type1)) print_error_and_die("type1 is not number");
     if(!is_numeric($type2)) print_error_and_die("type2 is not number");
 
-    $sql="SELECT _id as store_id FROM Store WHERE (category & $category != 0) AND (region & $region != 0) AND (type1 & $type1 != 0) AND (type2 & $type2 != 0) AND (close_date > now())";
+    $sql="SELECT _id as store_id FROM Store WHERE (category & $category != 0) AND (region & $region != 0) AND (type1 & $type1 != 0) AND (type2 & $type2 != 0)";
     $result = mysqli_query($conn, $sql) or print_sql_error_and_die($conn, $sql);
 
     $res["res"] = 1;

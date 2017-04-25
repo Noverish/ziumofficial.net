@@ -26,21 +26,15 @@
 
     $sql =
         "SELECT ViewStorePreview.* FROM StoreKeyword ".
-        "INNER JOIN ViewStorePreview ".
-        "ON ViewStorePreview.store_id = StoreKeyword.store_id ".
-        "INNER JOIN Store ".
-        "ON Store._id = StoreKeyword.store_id ".
-        "WHERE REPLACE(keyword, ' ', '') LIKE '%%%s%%' AND (Store.close_date > now())".
+        "INNER JOIN ViewStorePreview ON ViewStorePreview.store_id = StoreKeyword.store_id ".
+        "WHERE REPLACE(keyword, ' ', '') LIKE '%%%s%%' ".
         "UNION ".
-        "SELECT ViewStorePreview.* FROM ViewStorePreview ".
-        "INNER JOIN Store ".
-        "ON ViewStorePreview.store_id = Store._id ".
-        "WHERE REPLACE(store_name, ' ', '') LIKE '%%%s%%' AND (Store.close_date > now())".
+        "SELECT * FROM ViewStorePreview ".
+        "WHERE REPLACE(store_name, ' ', '') LIKE '%%%s%%' ".
         "UNION ".
         "SELECT ViewStorePreview.* FROM Store ".
-        "INNER JOIN ViewStorePreview ".
-        "ON ViewStorePreview.store_id = Store._id ".
-        "WHERE (property & $value != 0) AND (Store.close_date > now())".
+        "INNER JOIN ViewStorePreview ON ViewStorePreview.store_id = Store._id ".
+        "WHERE (property & $value != 0) ".
         "LIMIT $page_offset, $PAGE_SIZE ";
     $sql = sprintf($sql,
         mysqli_real_escape_string($conn, $keyword),
