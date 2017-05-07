@@ -22,5 +22,5 @@
 
     if(!is_numeric($user_id)) print_error_and_die("user_id is not number");
 
-    send_noti($user_id, $title, $content, $ticker);
+    send_noti($user_id, $title, $content, $ticker, $is_android);
  ?>

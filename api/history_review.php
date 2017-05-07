@@ -9,6 +9,9 @@
     $sql="INSERT INTO HistoryReview (user_id, review_id, date, is_android, app_version) VALUES ($user_id, $review_id, now(), $is_android, $app_version)";
     $result = mysqli_query($conn, $sql);
 
+    $sql_views = "UPDATE Review SET views = views + 1 WHERE _id = $review_id";
+    mysqli_query($conn, $sql_views);
+
     $row["res"] = 1;
     $row["msg"] = "success";
 
