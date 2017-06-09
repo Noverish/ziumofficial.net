@@ -11,7 +11,7 @@
 
     $sql_store = "SELECT *, ".
                  "(SELECT img_main FROM Event WHERE store_id = $store_id AND is_open = 1) as event_main, ".
-                 "(SELECT img_main FROM Event WHERE store_id = $store_id AND is_open = 1) as event_detail, ".
+                 "(SELECT img_detail FROM Event WHERE store_id = $store_id AND is_open = 1) as event_detail, ".
                  "(SELECT ROUND(IFNULL(AVG(star_rate), 0), 1) FROM Review WHERE store_id = $store_id) as star_average, ".
                  "(SELECT COUNT(_id) FROM Review WHERE store_id = $store_id) as review_num,".
                  "(SELECT COUNT(_id) FROM UserDibs WHERE store_id = $store_id) as dibs_num, ".

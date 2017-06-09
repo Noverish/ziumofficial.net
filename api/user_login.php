@@ -24,18 +24,20 @@
 
     echo raw_json_encode($res);
 
-    $sql = "UPDATE User SET token = $token WHERE _id = ".$row["_id"];
-    $result = mysqli_query($conn, $sql);
+    if($res["res"] == 1) {
+        $sql = "UPDATE User SET token = $token WHERE _id = ".$row["_id"];
+        $result = mysqli_query($conn, $sql);
 
-    $user_id = $row['_id'];
+        $user_id = $row['_id'];
 
-    $sql = "SELECT * FROM HistoryLoginNew WHERE user_id = $user_id && date(date) = date(now())";
-    $result = mysqli_query($conn, $sql);
-    if(mysqli_num_rows($result) == 0) {
-        $sql = "UPDATE User SET score = score + $SCORE_ATTEND WHERE _id = $user_id";
-        mysqli_query($conn, $sql);
+        $sql = "SELECT * FROM HistoryLoginNew WHERE user_id = $user_id && date(date) = date(now())";
+        $result = mysqli_query($conn, $sql);
+        if(mysqli_num_rows($result) == 0) {
+            $sql = "UPDATE User SET score = score + $SCORE_ATTEND WHERE _id = $user_id";
+            mysqli_query($conn, $sql);
+        }
+
+        $sql = "INSERT INTO HistoryLoginNew (user_id, date, is_android, app_version) VALUES ($user_id, now(), $is_android, $app_version)";
+        $result = mysqli_query($conn, $sql);
     }
-
-    $sql = "INSERT INTO HistoryLoginNew (user_id, date, is_android, app_version) VALUES ($user_id, now(), $is_android, $app_version)";
-    $result = mysqli_query($conn, $sql);
 ?>
