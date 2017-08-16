@@ -7,9 +7,9 @@
 
     $sql =
         "SELECT is_owner, user_name, ".
-        "FIND_IN_SET(score, (SELECT GROUP_CONCAT(score ORDER BY score DESC) FROM User)) AS rank, score, ".
-        "(SELECT COUNT(*) > 0 FROM UserMsg WHERE user_id = User._id AND is_user_sent = FALSE AND is_user_read = FALSE) AS has_noti ".
-        "FROM User WHERE _id = $user_id";
+        "(SELECT COUNT(*) + 1 FROM User WHERE score > u.score) AS rank, score, ".
+        "(SELECT COUNT(*) > 0 FROM UserMsg WHERE user_id = u._id AND is_user_sent = FALSE AND is_user_read = FALSE) AS has_noti ".
+        "FROM User AS u WHERE _id = $user_id";
     $result = mysqli_query($conn, $sql) or print_error_and_die(mysqli_error($conn));
     if($result == null || $result == false ||mysqli_num_rows($result) == 0) {
         $data['res'] = 0;

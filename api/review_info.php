@@ -39,4 +39,10 @@
     $res = array('res' => 1, 'msg' => 'success') + $res;
 
     echo raw_json_encode($res);
+
+    $sql_views = "UPDATE Review SET views = views + 1 WHERE _id = $review_id";
+    mysqli_query($conn, $sql_views);
+
+    $sql = "INSERT INTO HistoryReview (user_id, review_id, date, is_android, app_version) VALUES ($user_id, $review_id, now(), $is_android, $app_version)";
+    $result = mysqli_query($conn, $sql);
 ?>

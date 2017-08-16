@@ -3,7 +3,6 @@
 
     ($user_name = $_POST['user_name']) != NULL or print_error_and_die("There is no user_name");
     ($kakaoID = $_POST['kakaoID']) != NULL or print_error_and_die("There is no kakaoID");
-    $token = isset($_POST['token']) ? "'".$_POST['token']."'" : "NULL";
 
     $sql_user = sprintf("SELECT user_name, kakaoID FROM User WHERE user_name = '%s' OR kakaoID = %s",
         mysqli_real_escape_string($conn, $user_name),
@@ -17,8 +16,8 @@
         die(raw_json_encode($res));
     }
 
-    $sql_register = sprintf("INSERT into User (kakaoID, user_name, is_owner, push, reg_date, score, warning, views, token) ".
-                            "VALUES (%s, '%s', 0, 0, now(), 0, 0, 0, $token)",
+    $sql_register = sprintf("INSERT into User (kakaoID, user_name, is_owner, push, reg_date, score, warning, views) ".
+                            "VALUES (%s, '%s', 0, 0, now(), 0, 0, 0)",
         mysqli_real_escape_string($conn, $kakaoID),
         mysqli_real_escape_string($conn, $user_name));
     $result_register = mysqli_query($conn, $sql_register) or print_sql_error_and_die($conn, $sql_register);

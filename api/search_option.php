@@ -29,7 +29,7 @@
         "img as store_img, is_new, ".
         "(SELECT IF(COUNT(_id) = 0, 0, 1) FROM Event WHERE store_id = Store._id) as is_event ".
         "FROM Store ".
-        "WHERE (category & $category != 0) AND (region & $region != 0) AND (type1 & $type1 != 0) AND (type2 & $type2 != 0) ";
+        "WHERE (category & $category != 0) AND (region & $region != 0) AND (type1 & $type1 != 0) AND (type2 & $type2 != 0) AND (close_date > now())";
 
     if($sort == 0)
         $sql .= "ORDER BY (views + dibs_num * 30 + star_average * review_num * 10) DESC ";

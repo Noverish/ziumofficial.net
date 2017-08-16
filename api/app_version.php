@@ -4,7 +4,7 @@
     ($is_android = $_POST["is_android"]) != NULL or print_error_and_die("There is is_android");
 
     if($is_android) {
-        $res["version"] = "2.0.1";
+        $res["version"] = "2.0.3";
     } else {
         $res["version"] = "1.0.0";
     }

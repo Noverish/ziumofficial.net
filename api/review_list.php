@@ -11,7 +11,7 @@
     $page_offset = $PAGE_SIZE * ($page - 1);
 
     $now = new DateTime();
-    $now->sub(new DateInterval("P3D"));
+    $now->sub(new DateInterval("P7D"));
     $now_str = $now->format("Y-m-d H:i:s");
 
     if(isset($_POST["user_id"])) {

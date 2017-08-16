@@ -7,12 +7,12 @@
 
     $urls = array();
 
-    array_push($urls, "https://s3.ap-northeast-2.amazonaws.com/kusulang-asset/cafeteria/2017-04_3/1.jpg");
-    array_push($urls, "https://s3.ap-northeast-2.amazonaws.com/kusulang-asset/cafeteria/2017-04_3/2.jpg");
-    array_push($urls, "https://s3.ap-northeast-2.amazonaws.com/kusulang-asset/cafeteria/2017-04_3/3.jpg");
-    array_push($urls, "https://s3.ap-northeast-2.amazonaws.com/kusulang-asset/cafeteria/2017-04_3/4.jpg");
-    array_push($urls, "https://s3.ap-northeast-2.amazonaws.com/kusulang-asset/cafeteria/2017-04_3/5.jpg");
-    array_push($urls, "https://s3.ap-northeast-2.amazonaws.com/kusulang-asset/cafeteria/2017-04_3/6.jpg");
+    array_push($urls, "https://s3.ap-northeast-2.amazonaws.com/kusulang-asset/cafeteria/2017-06_2/1.JPG");
+    array_push($urls, "https://s3.ap-northeast-2.amazonaws.com/kusulang-asset/cafeteria/2017-06_2/2.JPG");
+    array_push($urls, "https://s3.ap-northeast-2.amazonaws.com/kusulang-asset/cafeteria/2017-06_2/3.JPG");
+    array_push($urls, "https://s3.ap-northeast-2.amazonaws.com/kusulang-asset/cafeteria/2017-06_2/4.JPG");
+    array_push($urls, "https://s3.ap-northeast-2.amazonaws.com/kusulang-asset/cafeteria/2017-06_2/5.JPG");
+    array_push($urls, "https://s3.ap-northeast-2.amazonaws.com/kusulang-asset/cafeteria/2017-06_2/6.JPG");
 
     $res["res"] = 1;
     $res["msg"] = "success";
