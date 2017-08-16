@@ -3,3 +3,7 @@ _gabia/
 .ftpconfig
 *.jpg
 *.png
+
+/asset/
+/article/
+/doc2html/
