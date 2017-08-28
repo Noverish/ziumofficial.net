@@ -1,5 +1,5 @@
 <?php
-    $mysqli_hostname = 'db.ziumcompany.net';
+    $mysqli_hostname = 'kusulang.clqnfykyz4cm.ap-northeast-2.rds.amazonaws.com';
     $mysqli_user = 'ziumofficial';
     $mysqli_password = 'zntbffod1!';
     $mysqli_database = 'dbziumofficial';
